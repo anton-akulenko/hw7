@@ -13,5 +13,5 @@ setup(name='Folder_sorting',
             "License :: OSI Approved :: MIT License",
             "Operating System :: OS Independent"],
       packages=find_packages(),
-      entry_points={'console_scripts': 'clean-folder=HW6:__main__'
+      entry_points={'console_scripts': 'clean-folder=my_package.HW6:main'
       })
