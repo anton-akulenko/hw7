@@ -4,13 +4,7 @@ import shutil
 
 from pathlib import Path
 
-path = None
-try:
-    path = sys.argv[1]
-except IndexError:
-    print('No parameter')
-
-workfolder = Path(path) #Path(r"D:\test_folder_for_sorting")  # path to the dir
+#Path(r"D:\test_folder_for_sorting")  # path to the dir
 
 CATEGORIES = {
     'video': ['.mp4', '.mov', '.avi', '.mpeg', '.vob'],
@@ -81,21 +75,31 @@ def del_empty_folder(path):
     if len(files) == 0:
         os.rmdir(path)
 
-def unpack():
+def unpack(workfolder):
     arch_dir = workfolder / "archives"
     for entry in arch_dir.iterdir():
         unpack_dir = arch_dir / entry.name.split('.')[0]
         shutil.unpack_archive(entry, unpack_dir)
 
+def main():
+    path = None
+    try:
+        path = sys.argv[1]
+    except IndexError:
+        print('No parameter')
+        return None
+    
+    workfolder = Path(path)
+    
+    if not workfolder.exists():
+        print('The folder does not exist.')
+        return None
+    
+    create_folders(workfolder)
+    sort_files(workfolder)
+    del_empty_folder(workfolder)
+    unpack(workfolder)
 
 if __name__ == "__main__":
-    create_folders(workfolder)
-    sort_files(workfolder)
-    del_empty_folder(workfolder)
-    unpack()
+    main()
 
-def main(path):
-    create_folders(workfolder)
-    sort_files(workfolder)
-    del_empty_folder(workfolder)
-    unpack()
